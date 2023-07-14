@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from airflow import DAG, XComArg
+from airflow import XComArg
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
@@ -24,7 +24,7 @@ def _assemble_dbt_build_commands(layer: str, source_task: str, **context):
 
     return distinct_paths
 
-    
+
 @dag(
     catchup=False,
     default_args={
@@ -36,7 +36,6 @@ def _assemble_dbt_build_commands(layer: str, source_task: str, **context):
     start_date=datetime(2023, 7, 1),
 )
 def test_dag():
-
     ##############################################################
 
     retrieve_dbt_model_paths = BashOperator(
@@ -95,12 +94,17 @@ def test_dag():
             task_id="dbt_build_marts",
         ).expand(bash_command=XComArg(assemble_dbt_marts_commands))
 
-    retrieve_dbt_model_paths >> [assemble_dbt_staging_commands, assemble_dbt_intermediate_commands, assemble_dbt_marts_commands]
+    retrieve_dbt_model_paths >> [
+        assemble_dbt_staging_commands,
+        assemble_dbt_intermediate_commands,
+        assemble_dbt_marts_commands,
+    ]
     dbt_build_staging >> dbt_build_intermediate >> dbt_build_marts
     assemble_dbt_staging_commands >> dbt_build_staging
     assemble_dbt_intermediate_commands >> dbt_build_intermediate
     assemble_dbt_marts_commands >> dbt_build_marts
 
     ##############################################################
+
 
 test_dag = test_dag()
