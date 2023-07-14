@@ -1,0 +1,13 @@
+---
+profiles:
+    target: dev
+    outputs:
+        dev:
+            type: bigquery
+            method: oauth
+            project: "{{ env_var('GOOGLE_PROJECT_NAME') }}"
+            dataset: "{{ env_var('DBT_SCHEMA') }}"
+            threads: 16
+            timeout_seconds: 300
+            priority: interactive
+            retries: 1

@@ -1,0 +1,36 @@
+[tool.black]
+line-length = 99
+include = '/project$|\.pyi?$'
+exclude = '''
+/(
+  \.git
+  | \.venv
+  | \.vscode
+)/
+'''
+
+[tool.codespell]
+ignore-words-list = "astroid,comparision,connexion,Partiton,partiton"
+skip = "./.venv./dbt/dbt_packages,.dbt/logs,.dbt/target,pyproject.toml"
+
+[tool.isort]
+profile = "black"
+
+[tool.poetry]
+name = "dynamic-task-mapping-for-dbt"
+version = "0.0.0"
+description = ""
+authors = ["padraic.slattery@xebia.com"]
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+apache-airflow="2.6.3"
+dbt-bigquery = ">=1.5.0,<1.6.0"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

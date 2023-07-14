@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+dbt_project/dbt_packages/
+dbt_project/logs/
+dbt_project/target/
+logs/
+.env
+airflow-webserver.pid
+airflow.cfg
+airflow.db
+standalone_admin_password.txt
+webserver_config.py
