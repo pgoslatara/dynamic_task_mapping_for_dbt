@@ -36,17 +36,17 @@ def _assemble_dbt_build_commands(layer: str, source_task: str, **context):
     start_date=datetime(2023, 7, 1),
 )
 def dynamic_task_mapping_dag():
-    retrieve_dbt_model_paths = BashOperator(
-        bash_command="dbt --quiet ls --resource-type model --output path | paste -s -d, -",
-        task_id="retrieve_dbt_model_paths",
-    )
-
     # Staging
     with TaskGroup(group_id="staging") as staging_models:
+        retrieve_dbt_model_paths = BashOperator(
+            bash_command="dbt --quiet ls --resource-type model --select staging --output path | paste -s -d, -",
+            task_id="retrieve_dbt_model_paths",
+        )
+
         assemble_dbt_staging_commands = PythonOperator(
             op_kwargs={
                 "layer": "staging",
-                "source_task": "retrieve_dbt_model_paths",
+                "source_task": "staging.retrieve_dbt_model_paths",
             },
             python_callable=_assemble_dbt_build_commands,
             task_id="assemble_dbt_staging_commands",
@@ -57,6 +57,8 @@ def dynamic_task_mapping_dag():
         dbt_build_staging = BashOperator.partial(
             task_id="dbt_build_staging",
         ).expand(bash_command=XComArg(assemble_dbt_staging_commands))
+        
+        retrieve_dbt_model_paths >> assemble_dbt_staging_commands >> dbt_build_staging
 
     # Intermediate
     dbt_build_intermediate = BashOperator(
@@ -71,9 +73,7 @@ def dynamic_task_mapping_dag():
     )
 
     (
-        retrieve_dbt_model_paths
-        >> assemble_dbt_staging_commands
-        >> dbt_build_staging
+        staging_models
         >> dbt_build_intermediate
         >> dbt_build_marts
     )
