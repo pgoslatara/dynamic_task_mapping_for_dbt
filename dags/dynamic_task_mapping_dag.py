@@ -57,7 +57,7 @@ def dynamic_task_mapping_dag():
         dbt_build_staging = BashOperator.partial(
             task_id="dbt_build_staging",
         ).expand(bash_command=XComArg(assemble_dbt_staging_commands))
-        
+
         retrieve_dbt_model_paths >> assemble_dbt_staging_commands >> dbt_build_staging
 
     # Intermediate
@@ -72,11 +72,7 @@ def dynamic_task_mapping_dag():
         task_id="dbt_build_marts",
     )
 
-    (
-        staging_models
-        >> dbt_build_intermediate
-        >> dbt_build_marts
-    )
+    (staging_models >> dbt_build_intermediate >> dbt_build_marts)
 
 
 dynamic_task_mapping_dag = dynamic_task_mapping_dag()
