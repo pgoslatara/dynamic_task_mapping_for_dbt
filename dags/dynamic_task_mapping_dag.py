@@ -6,23 +6,17 @@ from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.utils.task_group import TaskGroup
+from dbt.cli.main import dbtRunner
 
 
-def _assemble_dbt_build_commands(layer: str, source_task: str, **context):
-    task_instance = context["task_instance"]
-    xcom_output = task_instance.xcom_pull(task_ids=source_task)
-    logging.info(f"{xcom_output=}")
-
-    distinct_paths = list(
-        {
-            f"dbt build --select {x[:x.rfind('/')]}"
-            for x in xcom_output.split(",")
-            if x.find(f"models/{layer}") == 0
-        }
+def _assemble_dbt_staging_paths():
+    res = dbtRunner().invoke(
+        "dbt --quiet ls --resource-type model --select staging --output path".split(" ")[1:]
     )
+    distinct_paths = {x[: x.rfind("/")] for x in res.result}
     logging.info(f"{distinct_paths=}")
 
-    return distinct_paths
+    return [f"dbt build --select {x}" for x in list(distinct_paths)]
 
 
 @dag(
@@ -38,17 +32,8 @@ def _assemble_dbt_build_commands(layer: str, source_task: str, **context):
 def dynamic_task_mapping_dag():
     # Staging
     with TaskGroup(group_id="staging") as staging_models:
-        retrieve_dbt_model_paths = BashOperator(
-            bash_command="dbt --quiet ls --resource-type model --select staging --output path | paste -s -d, -",
-            task_id="retrieve_dbt_model_paths",
-        )
-
-        assemble_dbt_staging_commands = PythonOperator(
-            op_kwargs={
-                "layer": "staging",
-                "source_task": "staging.retrieve_dbt_model_paths",
-            },
-            python_callable=_assemble_dbt_build_commands,
+        determine_staging_paths = PythonOperator(
+            python_callable=_assemble_dbt_staging_paths,
             task_id="assemble_dbt_staging_commands",
         )
 
@@ -56,9 +41,9 @@ def dynamic_task_mapping_dag():
         # https://github.com/apache/airflow/issues/22073
         dbt_build_staging = BashOperator.partial(
             task_id="dbt_build_staging",
-        ).expand(bash_command=XComArg(assemble_dbt_staging_commands))
+        ).expand(bash_command=XComArg(determine_staging_paths))
 
-        retrieve_dbt_model_paths >> assemble_dbt_staging_commands >> dbt_build_staging
+        determine_staging_paths >> dbt_build_staging
 
     # Intermediate
     dbt_build_intermediate = BashOperator(
