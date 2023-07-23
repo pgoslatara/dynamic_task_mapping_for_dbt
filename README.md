@@ -19,7 +19,12 @@ A repo to demonstrate how to use [dynamic task mapping](https://airflow.apache.o
 
 1. Set the required environmental variables:
     ```bash
-    export AIRFLOW_HOME="$(pwd)"
+    export AIRFLOW_HOME="$(pwd)/dev"
+    export AIRFLOW__CORE__DAGS_FOLDER="$(pwd)/dags"
+    export PYTHONPATH="${PYTHONPATH}:$(pwd)/plugins"
+    export AIRFLOW__CORE__PLUGINS_FOLDER="$(pwd)/plugins"
+    export AIRFLOW__CORE__LOAD_EXAMPLES="False"
+
     export DBT_PROFILES_DIR="$(pwd)/dbt_project"
     export DBT_PROJECT_DIR="$(pwd)/dbt_project"
     export DBT_SCHEMA="<YOUR_SCHEMA>"
@@ -28,7 +33,13 @@ A repo to demonstrate how to use [dynamic task mapping](https://airflow.apache.o
 
 1. Set the required Airflow variable:
     ```bash
+    airflow db init
     airflow variables set DBT_PROJECT_DIR $(pwd)/dbt_project
+    ```
+
+1. Run dbt to generate the required `manifest.json` file:
+    ```bash
+    dbt build
     ```
 
 1. Ensure your virtual environment is activated, start Airflow:
