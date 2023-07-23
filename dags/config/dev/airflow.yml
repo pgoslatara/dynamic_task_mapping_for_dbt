@@ -1,0 +1,15 @@
+---
+default_args:
+    owner: Analytics Engineering
+    email:
+        - the_ae_team@your_company.com
+    start_date: 2023-01-01T00:00:00
+    retries: 0
+
+dag:
+    dag_id: dbt_airflow_factory
+    catchup: false
+
+seed_task: false
+manifest_file_name: '{{ var.value.DBT_PROJECT_DIR }}/target/manifest.json'
+use_task_group: true

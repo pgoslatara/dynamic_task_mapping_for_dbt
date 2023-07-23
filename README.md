@@ -26,6 +26,11 @@ A repo to demonstrate how to use [dynamic task mapping](https://airflow.apache.o
     export GOOGLE_PROJECT_NAME="<YOUR_GCP_PROJECT>"
     ```
 
+1. Set the required Airflow variable:
+    ```bash
+    airflow variables set DBT_PROJECT_DIR $(pwd)/dbt_project
+    ```
+
 1. Ensure your virtual environment is activated, start Airflow:
     ```bash
     airflow standalone

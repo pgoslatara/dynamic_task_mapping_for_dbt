@@ -1,0 +1,5 @@
+---
+target: dev
+target_type: bigquery
+project_dir_path: '{{ var.value.DBT_PROJECT_DIR }}'
+profile_dir_path: '{{ var.value.DBT_PROJECT_DIR }}'
