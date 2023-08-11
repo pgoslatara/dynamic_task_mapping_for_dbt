@@ -22,6 +22,7 @@ def _assemble_dbt_staging_paths():
 @dag(
     catchup=False,
     default_args={
+        "owner": "Analytics Engineering",
         "retries": 3,
     },
     description="",
