@@ -28,7 +28,7 @@ def _assemble_dbt_staging_paths():
     description="",
     max_active_runs=1,
     schedule=None,
-    start_date=datetime(2023, 7, 1),
+    start_date=datetime(2023, 1, 1),
 )
 def dynamic_task_mapping_dag():
     # Staging

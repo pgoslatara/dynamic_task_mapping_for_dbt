@@ -13,7 +13,7 @@ from airflow.operators.bash import BashOperator
     description="",
     max_active_runs=1,
     schedule=None,
-    start_date=datetime(2023, 7, 1),
+    start_date=datetime(2023, 1, 1),
 )
 def one_airflow_task():
     BashOperator(
