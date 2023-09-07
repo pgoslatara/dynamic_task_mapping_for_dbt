@@ -9,6 +9,7 @@ default_args:
 dag:
     dag_id: dbt_airflow_factory
     catchup: false
+    schedule_interval:
 
 seed_task: false
 manifest_file_name: '{{ var.value.DBT_PROJECT_DIR }}/target/manifest.json'

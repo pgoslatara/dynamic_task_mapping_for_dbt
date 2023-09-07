@@ -10,7 +10,7 @@ exclude = '''
 '''
 
 [tool.codespell]
-ignore-words-list = "astroid,comparision,connexion,Partiton,partiton"
+ignore-words-list = "astroid,comparision,connexion,doubleclick,Partiton,partiton"
 skip = "./.venv./dbt/dbt_packages,.dbt/logs,.dbt/target,pyproject.toml"
 
 [tool.isort]

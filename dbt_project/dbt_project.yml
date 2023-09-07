@@ -35,3 +35,7 @@ models:
     # Config indicated by + and applies to all files under models/example/
         example:
             +materialized: view
+
+seeds:
+    +docs:
+        node_color: '#75b441'
