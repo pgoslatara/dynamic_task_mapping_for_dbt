@@ -30,7 +30,7 @@ def _assemble_dbt_staging_paths():
     schedule=None,
     start_date=datetime(2023, 1, 1),
 )
-def dynamic_task_mapping_dag():
+def dynamic_task_mapping():
     # Staging
     with TaskGroup(group_id="staging") as staging_models:
         determine_staging_paths = PythonOperator(
@@ -61,4 +61,4 @@ def dynamic_task_mapping_dag():
     (staging_models >> dbt_build_intermediate >> dbt_build_marts)
 
 
-dynamic_task_mapping_dag = dynamic_task_mapping_dag()
+dynamic_task_mapping = dynamic_task_mapping()
