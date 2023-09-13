@@ -207,7 +207,7 @@ apache-airflow-providers-slack = {version = "*", optional = true, markers = "ext
 apache-airflow-providers-sqlite = "*"
 argcomplete = ">=1.10"
 asgiref = [
-    {version = "*"},
+    {version = "*", optional = true, markers = "extra != \"kubernetes\""},
     {version = ">=3.5.2", optional = true, markers = "extra == \"kubernetes\""},
 ]
 attrs = ">=22.1.0"
@@ -219,7 +219,7 @@ connexion = {version = ">=2.10.0", extras = ["flask"]}
 cron-descriptor = ">=1.2.24"
 croniter = ">=0.3.17"
 cryptography = [
-    {version = ">=0.9.3"},
+    {version = ">=0.9.3", optional = true, markers = "extra != \"kubernetes\""},
     {version = ">=2.0.0", optional = true, markers = "extra == \"kubernetes\""},
 ]
 deprecated = ">=1.2.13"
@@ -2987,6 +2987,88 @@ signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
 
 [[package]]
+name = "openlineage-airflow"
+version = "1.1.0"
+description = "OpenLineage integration with Airflow"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openlineage-airflow-1.1.0.tar.gz", hash = "sha256:45c08004c57b348534805159efb5d366dfcb3fabb22cd9351994c460a993a4c1"},
+    {file = "openlineage_airflow-1.1.0-py3-none-any.whl", hash = "sha256:84f2f778289c1a6ec367de9526f3f23b9a261cc628605b20122353ddcd3b3b1e"},
+]
+
+[package.dependencies]
+attrs = ">=20.3"
+openlineage-integration-common = {version = "1.1.0", extras = ["sql"]}
+openlineage-python = "1.1.0"
+requests = ">=2.20.0"
+
+[package.extras]
+airflow = ["airflow-provider-great-expectations (==0.1.5)", "apache-airflow-providers-amazon (>=3.1.1)", "apache-airflow-providers-dbt-cloud (<3.2.0)", "apache-airflow-providers-ftp (>=3.3.0)", "apache-airflow-providers-google (>=5.0.0)", "apache-airflow-providers-mysql (>=2.0.0)", "apache-airflow-providers-postgres (>=2.0.0)", "apache-airflow-providers-sftp (>=2.1.1)", "apache-airflow-providers-snowflake (>=2.1.0)", "apache-airflow-providers-ssh (>=2.1.0)", "apache-airflow-providers-trino (>=3.1.0)", "great-expectations (<=0.15.23)", "protobuf (>=3.20,<4.23)"]
+dev = ["Flask-SQLAlchemy", "SQLAlchemy", "aiohttp", "mock", "pandas-gbq (==0.14.1)", "pytest", "pytest-cov", "pytest-mock", "ruff", "snowflake-connector-python"]
+tests = ["Flask-SQLAlchemy", "SQLAlchemy", "aiohttp", "mock", "pandas-gbq (==0.14.1)", "pytest", "pytest-cov", "pytest-mock", "ruff", "snowflake-connector-python"]
+
+[[package]]
+name = "openlineage-integration-common"
+version = "1.1.0"
+description = "OpenLineage common python library for integrations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openlineage-integration-common-1.1.0.tar.gz", hash = "sha256:c61c3f1e83f83db2e126695512fdcc870d977c407be240fcd154880248795b11"},
+    {file = "openlineage_integration_common-1.1.0-py3-none-any.whl", hash = "sha256:22c6acc9c12ff9f5148112ac47f71532dd9e3f60f3d51393c98ad22ab94aa8e9"},
+]
+
+[package.dependencies]
+attrs = ">=19.3.0"
+openlineage-python = "1.1.0"
+openlineage-sql = "1.1.0"
+
+[package.extras]
+bigquery = ["google-api-core (>=1.26.3)", "google-auth (>=1.30.0)", "google-cloud-bigquery (>=2.15.0,<4.0.0)", "google-cloud-core (>=1.6.0)", "google-crc32c (>=1.1.2)"]
+dbt = ["dbt-core (>=0.20.0)", "pyyaml (>=5.3.1)"]
+dev = ["boto3 (>=1.15.0)", "dbt-core (>=0.20.0)", "google-api-core (>=1.26.3)", "google-auth (>=1.30.0)", "google-cloud-bigquery (>=2.15.0,<4.0.0)", "google-cloud-core (>=1.6.0)", "google-crc32c (>=1.1.2)", "great-expectations (>=0.13.26,<0.15.35)", "jinja2", "mock", "mypy (>=0.960)", "pandas", "pytest", "pytest-cov", "pytest-mock", "python-dateutil", "pyyaml (>=5.3.1)", "ruff", "sqlalchemy (>=1.3.24,<2.0.0)", "types-PyYAML", "types-python-dateutil"]
+dev-no-parser = ["boto3 (>=1.15.0)", "dbt-core (>=0.20.0)", "google-api-core (>=1.26.3)", "google-auth (>=1.30.0)", "google-cloud-bigquery (>=2.15.0,<4.0.0)", "google-cloud-core (>=1.6.0)", "google-crc32c (>=1.1.2)", "great-expectations (>=0.13.26,<0.15.35)", "jinja2", "mock", "mypy (>=0.960)", "pandas", "pytest", "pytest-cov", "pytest-mock", "python-dateutil", "pyyaml (>=5.3.1)", "ruff", "sqlalchemy (>=1.3.24,<2.0.0)", "types-PyYAML", "types-python-dateutil"]
+great-expectations = ["great-expectations (>=0.13.26,<0.15.35)", "sqlalchemy (>=1.3.24,<2.0.0)"]
+redshift = ["boto3 (>=1.15.0)"]
+tests = ["jinja2", "mock", "mypy (>=0.960)", "pandas", "pytest", "pytest-cov", "pytest-mock", "python-dateutil", "ruff", "types-PyYAML", "types-python-dateutil"]
+
+[[package]]
+name = "openlineage-python"
+version = "1.1.0"
+description = "OpenLineage Python Client"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openlineage_python-1.1.0-py3-none-any.whl", hash = "sha256:27ead9ecb5527ebdc27393fd6f3dcb987610f7ce2962e4c615554c990e372e8b"},
+    {file = "openlineage_python-1.1.0.tar.gz", hash = "sha256:18ede78cf9428779097795658c145675ee785c2f63f770f5f513280ac35e4a0d"},
+]
+
+[package.dependencies]
+attrs = ">=23.1"
+python-dateutil = ">=2.8.2"
+pyyaml = ">=5.4"
+requests = ">=2.31"
+
+[package.extras]
+kafka = ["confluent-kafka (>=2.1.1)"]
+test = ["covdefaults (>=2.3)", "pytest (>=7.3.1)", "pytest-cov (>=4.1)", "pytest-mock (>=3.10)", "pyyaml (>=5.4)"]
+
+[[package]]
+name = "openlineage-sql"
+version = "1.1.0"
+description = "Python interface for the Rust OpenLineage lineage extraction library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openlineage_sql-1.1.0-cp37-abi3-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:2fd2208f0f07509d3ba78456218a019ee84e4dab81fb49bb365f40ca87e3f025"},
+    {file = "openlineage_sql-1.1.0-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:da5a4d39d529415875ed06150df731520de7a006f2460a30f9738ac80a6fbbd8"},
+    {file = "openlineage_sql-1.1.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ab0ea816f53a163bc86fd2398026cae0eb51d3385fcdb7ad417311011a215023"},
+    {file = "openlineage_sql-1.1.0-cp37-abi3-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:1d211c7dce5f38659bf1abda2214c698476b68099a801d3dba4a7297e31138ad"},
+    {file = "openlineage_sql-1.1.0.tar.gz", hash = "sha256:5205885e6b83f220864563f92f6a5d7265db6b3025d3947435b5574ddac98718"},
+]
+
+[[package]]
 name = "ordered-set"
 version = "4.1.0"
 description = "An OrderedSet is a custom MutableSet that remembers its order, so that every"
@@ -4324,4 +4406,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "adef74582c1f26b9ab7dcf74b70cf5fa86c8983e3f3ce25c26742791946a6cee"
+content-hash = "f701364cef2a979017726fc39c751e8bdfead1b183003401563cd806b188cc15"
