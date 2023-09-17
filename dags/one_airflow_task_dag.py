@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from airflow.decorators import dag
-from airflow.operators.bash import BashOperator
+from xebia_dbt import XebiaDbtPlugin
 
 
 @dag(
@@ -16,9 +16,9 @@ from airflow.operators.bash import BashOperator
     start_date=datetime(2023, 1, 1),
 )
 def one_airflow_task():
-    BashOperator(
-        bash_command="dbt build",
+    XebiaDbtPlugin(
         task_id="dbt_build",
+        dbt_command="poetry run dbt build",
     )
 
 
