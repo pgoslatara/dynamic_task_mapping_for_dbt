@@ -16,6 +16,7 @@ with DAG(
     catchup=False,
     max_active_runs=1,
     concurrency=1,
+    schedule=None,
     start_date=datetime(2023, 1, 1),
 ):
     dbt_tg = DbtTaskGroup(
