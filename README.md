@@ -31,6 +31,40 @@ A repo to demonstrate how to use [dynamic task mapping](https://airflow.apache.o
     export GOOGLE_PROJECT_NAME="<YOUR_GCP_PROJECT>"
     ```
 
+1. Build the Docker image used for dbt:
+    ```bash
+    docker build --build-arg="DBT_SCHEMA=$DBT_SCHEMA" --build-arg="GOOGLE_PROJECT_NAME=$GOOGLE_PROJECT_NAME" --tag dbt-base:latest -f ./Dockerfile .
+    ```
+
+1. Test that the Docker image successfully builds dbt models:
+    ```bash
+    docker run --volume ~/.config/gcloud:/root/.config/gcloud -e DBT_SCHEMA=$DBT_SCHEMA -e GOOGLE_PROJECT_NAME=$GOOGLE_PROJECT_NAME -it --rm dbt-base:latest poetry run dbt build
+    ```
+
+1. Tag and push the Docker image:
+    ```bash
+    docker tag dbt-base:latest pgoslatara/dynamic-tasks:dbt-base
+    docker push pgoslatara/dynamic-tasks:dbt-base
+    ```
+
+1. Install Minikube, steps [here](https://minikube.sigs.k8s.io/docs/start/).
+
+1. Start a local Minikube cluster:
+    ```bash
+    minikube start --driver=docker
+    ```
+
+1. Enable the `gcp-auth` addon:
+    ```bash
+    minikube addons enable gcp-auth
+    ```
+
+1. [Optional] Enable all metrics and start the Minikube dashboard:
+    ```bash
+    minikube addons enable metrics-server
+    minikube dashboard
+    ```
+
 1. Set the required Airflow variable:
     ```bash
     airflow db init
@@ -48,3 +82,11 @@ A repo to demonstrate how to use [dynamic task mapping](https://airflow.apache.o
     ```
 
 1. View the DAGs in the web UI at [http://localhost:8080](http://localhost:8080): username: `admin`, password can be found in `./standalone_admin_password.txt`.
+
+To re-build your local dev environment, delete all files in `./dev` and repeat the above steps.
+
+If you experience any issues with Minikube containers not authenticating to `gcloud` you can refresh the credentials:
+
+```bash
+minikube addons enable gcp-auth --refresh
+```

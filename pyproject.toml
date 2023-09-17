@@ -24,14 +24,14 @@ authors = ["padraic.slattery@xebia.com"]
 packages = []
 
 [tool.poetry.dependencies]
-python = "^3.11"
-apache-airflow="2.6.3"
+python = ">=3.8,<3.9"
+apache-airflow=">=2.7,<2.8"
 apache-airflow-providers-airbyte="^3.3"
 apache-airflow-providers-cncf-kubernetes="^7.3"
 apache-airflow-providers-slack="^7.3"
-astronomer-cosmos = "*"
-dbt-airflow-factory="^0.34"
-dbt-bigquery = ">=1.5.0,<1.6.0"
+astronomer-cosmos = "1.0.5"
+dbt-airflow-factory=">=0.34"
+dbt-bigquery = ">=1.5.0"
 openlineage-airflow="*"
 
 [tool.poetry.dev-dependencies]
