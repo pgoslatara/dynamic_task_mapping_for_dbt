@@ -90,3 +90,9 @@ If you experience any issues with Minikube containers not authenticating to `gcl
 ```bash
 minikube addons enable gcp-auth --refresh
 ```
+
+# Talks
+
+This repo accompanies the following talk:
+
+* [Using Dynamic Task Mapping to Orchestrate dbt](https://airflowsummit.org/sessions/2023/using-dynamic-task-mapping-to-orchestrate-dbt/), slides available [here](https://docs.google.com/presentation/d/12tfwuZ8Z5oBugscxu9DVu__WrAaG0oiiEVPMpJMuwls/edit?pli=1#slide=id.g26107c3ecea_1_26).
