@@ -605,28 +605,28 @@ tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
 name = "astronomer-cosmos"
-version = "1.0.5"
+version = "1.1.1a1"
 description = "Render 3rd party workflows in Airflow"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "astronomer_cosmos-1.0.5-py3-none-any.whl", hash = "sha256:deaf9d60996dc1f592486fd97d8b1e832ed60f28ada210e61da4f0caeaa0dfbe"},
-    {file = "astronomer_cosmos-1.0.5.tar.gz", hash = "sha256:798f260eaabfde7ae84da000fa7d0f4babd9f735d1736a972d368b8f585d7792"},
+    {file = "astronomer_cosmos-1.1.1a1-py3-none-any.whl", hash = "sha256:7aa64b9050de72f83d69ce7180b6baa11bc7464f6940d2d72307c857b9d7e3c5"},
+    {file = "astronomer_cosmos-1.1.1a1.tar.gz", hash = "sha256:e96c40fc6ff8940d861a06ca0277d45b8c8b594e710e494194b123fe82d10f46"},
 ]
 
 [package.dependencies]
 apache-airflow = ">=2.3.0"
+attrs = "*"
 jinja2 = ">=3.0.0"
 pydantic = ">=1.10.0,<2.0.0"
 virtualenv = "*"
 
 [package.extras]
-all = ["astronomer-cosmos[dbt-all]"]
-dbt-all = ["astronomer-cosmos[dbt-openlineage]", "dbt-bigquery (<=1.5.4)", "dbt-databricks (<=1.5.4)", "dbt-exasol (<=1.5.4)", "dbt-postgres (<=1.5.4)", "dbt-redshift (<=1.5.4)", "dbt-snowflake (<=1.5.4)", "dbt-spark (<=1.5.4)"]
+all = ["astronomer-cosmos[dbt-all]", "astronomer-cosmos[openlineage]"]
+dbt-all = ["dbt-bigquery (<=1.5.4)", "dbt-databricks (<=1.5.4)", "dbt-exasol (<=1.5.4)", "dbt-postgres (<=1.5.4)", "dbt-redshift (<=1.5.4)", "dbt-snowflake (<=1.5.4)", "dbt-spark (<=1.5.4)"]
 dbt-bigquery = ["dbt-bigquery (<=1.5.4)"]
 dbt-databricks = ["dbt-databricks (<=1.5.4)"]
 dbt-exasol = ["dbt-exasol (<=1.5.4)"]
-dbt-openlineage = ["dbt-core (<=1.5.4)", "openlineage-dbt (>=0.21.1)"]
 dbt-postgres = ["dbt-postgres (<=1.5.4)"]
 dbt-redshift = ["dbt-redshift (<=1.5.4)"]
 dbt-snowflake = ["dbt-snowflake (<=1.5.4)"]
@@ -634,6 +634,7 @@ dbt-spark = ["dbt-spark (<=1.5.4)"]
 docker = ["apache-airflow-providers-docker (>=3.5.0)"]
 docs = ["pydata-sphinx-theme", "sphinx", "sphinx-autoapi", "sphinx-autobuild"]
 kubernetes = ["apache-airflow-providers-cncf-kubernetes (>=5.1.1,<7.3.0)"]
+openlineage = ["openlineage-airflow", "openlineage-integration-common"]
 tests = ["mypy", "packaging", "pytest (>=6.0)", "pytest-cov", "pytest-describe", "pytest-dotenv", "pytest-split", "requests-mock", "sqlalchemy-stubs", "types-requests"]
 
 [[package]]
@@ -4627,4 +4628,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<3.9"
-content-hash = "2997036b6fd9e4c9837f29b8387b8912c2dab8cedf882dda5b9484fc11fe894e"
+content-hash = "a31b990500db5db84b9c21af8aaa719a985e0f5a4dd88bdcfa5de2f1197833ae"

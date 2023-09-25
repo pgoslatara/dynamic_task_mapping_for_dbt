@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.8-slim
 
 ARG DBT_SCHEMA
 ARG GOOGLE_PROJECT_NAME
@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install -qq -y \
 ENV POETRY_HOME="/opt/poetry"
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="$PATH:$POETRY_HOME/bin"
+# RUN poetry config virtualenvs.in-project true
+RUN poetry config virtualenvs.create false
 
 # Make sure we are using latest pip
 RUN pip install --upgrade pip
@@ -35,7 +37,10 @@ COPY ./dbt_project ./dbt_project
 RUN chmod +x ./dbt_project/scripts/extract_staging_paths.py
 
 # Pre-install dbt packages and parse dbt project
-RUN poetry run dbt deps && poetry run dbt parse
+# ENV VIRTUAL_ENV=.venv
+# RUN python -m venv $VIRTUAL_ENV
+# ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+RUN dbt deps && dbt parse
 
 # dbt commands will be supplied from Airflow operator
 CMD ["/bin/bash", "-c", "echo 'Expecting commands to be passed in.' && exit 1"]
