@@ -95,4 +95,4 @@ minikube addons enable gcp-auth --refresh
 
 This repo accompanies the following talk:
 
-* [Using Dynamic Task Mapping to Orchestrate dbt](https://airflowsummit.org/sessions/2023/using-dynamic-task-mapping-to-orchestrate-dbt/), slides available [here](https://docs.google.com/presentation/d/12tfwuZ8Z5oBugscxu9DVu__WrAaG0oiiEVPMpJMuwls/edit?pli=1#slide=id.g26107c3ecea_1_26).
+* [Using Dynamic Task Mapping to Orchestrate dbt](https://airflowsummit.org/sessions/2023/using-dynamic-task-mapping-to-orchestrate-dbt/), slides available [here](https://docs.google.com/presentation/d/12tfwuZ8Z5oBugscxu9DVu__WrAaG0oiiEVPMpJMuwls/edit?pli=1#slide=id.p), recording available [here](https://www.youtube.com/watch?v=CjjZyxnHfdk).
